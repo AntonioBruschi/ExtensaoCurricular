@@ -165,7 +165,7 @@
      background: #f9f9f9;
 }
  .theme_bg {
-     background: #38c8a8;
+     background: #2c4ae0;
 }
  .margin_top_30 {
      margin-top: 30px !important;
@@ -192,11 +192,11 @@
      position: relative;
      letter-spacing: -0.5px;
      color: #114c7d;
-     border-left: solid #38c8a8 10px;
+     border-left: solid #2c4ae0 10px;
      padding-left: 15px;
 }
  .main_heading h2 strong {
-     background: #38c8a8;
+     background: #2c4ae0;
      color: #fff;
      font-weight: 600;
      padding: 0 15px;
@@ -223,7 +223,7 @@
      letter-spacing: -0.5px;
 }
  .small_main_heading h2 strong {
-     color: #38c8a8;
+     color: #2c4ae0;
      font-weight: 600;
 }
  .main_bt {
@@ -289,7 +289,7 @@
      padding: 0px 5px;
      text-transform: uppercase;
      font-weight: 600;
-     background: #38c8a8;
+     background: #2c4ae0;
      position: fixed;
      bottom: 20px;
      z-index: 99;
@@ -443,7 +443,7 @@
      text-decoration: none;
 }
  .top-menu-left li a:hover {
-     color: #38c8a8;
+     color: #2c4ae0;
 }
  .right-dropdown-language {
      float: right;
@@ -459,7 +459,7 @@
      padding: 15px;
      background: #ffffff;
      list-style: none;
-     border: 2px solid #38c8a8;
+     border: 2px solid #2c4ae0;
      opacity: 0;
      visibility: hidden;
      -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -494,7 +494,7 @@
      padding: 5px 0;
 }
  .dropdown-bar .dropdown-link li a:hover {
-     color: #38c8a8;
+     color: #2c4ae0;
 }
  .dropdown-bar .dropdown-link li a img {
      margin-right: 7px;
@@ -549,7 +549,7 @@
      border-radius: 0px;
 }
  #login-modal .modal-content .modal-header {
-     background: #38c8a8;
+     background: #2c4ae0;
      border-radius: 0;
 }
  #login-modal .modal-content .modal-body .form-group input {
@@ -619,7 +619,7 @@
      font-size: 20px;
      padding: 4px 15px;
      border-radius: 0px;
-     background-color: #38c8a8;
+     background-color: #2c4ae0;
      cursor: pointer;
 }
  .header-search form .search-btn:hover {
@@ -641,7 +641,7 @@
      padding: 15px;
      background: #ffffff;
      list-style: none;
-     border: 2px solid #38c8a8;
+     border: 2px solid #2c4ae0;
      opacity: 0;
      visibility: hidden;
      -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -663,7 +663,7 @@
      transform: scaleY(1);
 }
  .inner-cart {
-     background: #38c8a8;
+     background: #2c4ae0;
      border-radius: 2px;
      padding: 0px;
      color: #ffffff;
@@ -684,10 +684,10 @@
      display: inline-block;
 }
  .cart-box a:hover {
-     color: #38c8a8;
+     color: #2c4ae0;
 }
  .cart-box a span.icon {
-     background: #38c8a8;
+     background: #2c4ae0;
      width: 30px;
      height: 40px;
      display: inline-block;
@@ -702,7 +702,7 @@
      right: -8px;
      top: -8px;
      line-height: initial;
-     background: #38c8a8;
+     background: #2c4ae0;
      padding: 3px;
      border-radius: 50%;
      width: 17px;
@@ -718,10 +718,10 @@
      display: inline-block;
 }
  .wish-box a:hover {
-     color: #38c8a8;
+     color: #2c4ae0;
 }
  .wish-box a span.icon {
-     background: #38c8a8;
+     background: #2c4ae0;
      width: 40px;
      height: 40px;
      display: inline-block;
@@ -760,7 +760,7 @@
      left: 0;
      width: 100%;
      height: 100%;
-     background-color: #38c8a8;
+     background-color: #2c4ae0;
      opacity: 0.4;
      transform: scale(0);
      -webkit-transform: scale(0);
@@ -776,7 +776,7 @@
      position: absolute;
      right: 0px;
      top: 0px;
-     background: #38c8a8;
+     background: #2c4ae0;
      color: #ffffff;
      width: 20px;
      height: 20px;
@@ -800,7 +800,7 @@
  .subtotal {
      text-align: left;
      text-transform: capitalize;
-     color: #38c8a8;
+     color: #2c4ae0;
      font-weight: 500;
      margin-bottom: 15px;
 }
@@ -829,7 +829,7 @@
      right: -8px;
      top: -8px;
      line-height: initial;
-     background: #38c8a8;
+     background: #2c4ae0;
      padding: 3px;
      border-radius: 50%;
      width: 17px;
