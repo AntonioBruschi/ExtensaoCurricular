@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "dev": "node --watch --no-warnings ./js/inserir.js"
+  },
+  "dependencies": {
+    "express": "^4.18.3",
+    "pg": "^8.11.3"
+  }
+}
