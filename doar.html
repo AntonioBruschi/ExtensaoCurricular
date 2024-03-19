@@ -129,142 +129,66 @@
   <br>
   <h2></h2>
   <div id="Livros-disponiveis">
-    <div class="alimento-box">
-      <img src="images/ComoTreinarSeuDragao.jpg" alt="Como Treinar Seu Dragao">
-      <div>
-        <h5>Como Treinar Seu Dragao</h5>
-        <p>Localização: Bairro boa vista, Rua pedro ivo, N386</p>
-        <p>Doado por: Antonio Gimenez</p>
-        <p>Contato: (43) 9 9181-2553</p>
-        <button class="retirar-btn" data-toggle="modal" data-target="#myModal">Retirar Livro</button>
-      </div>
-    </div>
-
-    <div class="alimento-box">
-      <img src="images/DiariodeUmBanana.jpg" alt="Diario de um Banana Queijo">
-      <div>
-        <h5>Diario de um Banana Toque do Queijo</h5>
-        <p>Localização: Bairro alagoas, Rua Fagundes, N325</p>
-        <p>Doado por: Fernando Godoy</p>
-        <p>Contato: (43) 9 8847-8972</p>
-        <button class="retirar-btn" data-toggle="modal" data-target="#myModal">Retirar Livro</button>
-      </div>
-    </div>
-
-    <div class="alimento-box">
-      <img src="images/DiariodeUmBanana2.jpg" alt="Diario de um Banana Azar">
-      <div>
-        <h5>Diario de um Banana Mare de Azar</h5>
-        <p>Localização: Bairro Madalena, Rua marechal deodoro, N53 </p>
-        <p>Doado por: Nicolas Mello Pinto</p>
-        <p>Contato: (43) 9 9854-2728</p>
-        <button class="retirar-btn" data-toggle="modal" data-target="#myModal">Retirar Livro</button>
-      </div>
-    </div>
-
-    <div class="alimento-box">
-      <img src="images/HarryPotter.jpg" alt="HarryPotter">
-      <div>
-        <h5>Harry Potter e a Pedra Filosofal</h5>
-        <p>Localização: Bairro Domingues Brando, Rua Carlos Almeida, N532</p>
-        <p>Doado por: Guilherme Sanchez</p>
-        <p>Contato: (43) 9 9816-1106</p>
-        <button class="retirar-btn" data-toggle="modal" data-target="#myModal">Retirar Livro</button>
-      </div>
-    </div>
-    <!-- Fim da parte do loop -->
-
-    <!-- Adicione este modal no final do seu corpo HTML -->
-    <div class="modal" id="myModal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <!-- Modal Header -->
-          <div class="modal-header">
-            <h4 class="modal-title">Informações do Retirante</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-          </div>
-          <!-- Modal Body -->
-          <div class="modal-body">
-            <form id="retiranteForm">
-              <label for="nome">Nome:</label>
-              <input type="text" id="nome" name="nome" required>
-              <label for="endereco">Endereço:</label>
-              <input type="text" id="endereco" name="endereco" required>
-              <label for="telefone">Telefone:</label>
-              <input type="text" id="telefone" name="telefone" required>
-            </form>
-          </div>
-          <!-- Modal Footer -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-            <button type="button" class="btn btn-primary" onclick="submeterFormulario()">Confirmar Retirada</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal de Confirmação -->
-    <div class="modal" id="confirmacaoModal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <!-- Modal Header -->
-          <div class="modal-header">
-            <h4 class="modal-title">Solicitação Enviada</h4>
-            <button type="button" class="close" onclick="fecharConfirmacaoModal()">&times;</button>
-          </div>
-          <!-- Modal Body -->
-          <div class="modal-body">
-            <p>Sua solicitação foi enviada com sucesso!</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Fim do modal de confirmação -->
+    <!-- Os livros serão adicionados aqui dinamicamente -->
   </div>
 
+  <!-- Modal de Confirmação -->
+  <div class="modal" id="confirmacaoModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Solicitação Enviada</h4>
+          <button type="button" class="close" onclick="fecharConfirmacaoModal()">&times;</button>
+        </div>
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <p>Sua solicitação foi enviada com sucesso!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Fim do modal de confirmação -->
+
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const urlParams = new URLSearchParams(window.location.search);
+    // Função para fazer a requisição à API e inserir os dados na página
+    async function carregarLivros() {
+      try {
+        const response = await fetch('http://127.0.0.1:3000/doacoes');
+        console.log(response)
+        const data = await response.json();
+        console.log(data)
+        const livrosDisponiveis = document.getElementById('Livros-disponiveis');
 
-      if (urlParams.has('nome') && urlParams.has('localizacao') && urlParams.has('doador') && urlParams.has('contato')) {
-        const nome = urlParams.get('nome');
-        const localizacao = urlParams.get('localizacao');
-        const doador = urlParams.get('doador');
-        const contato = urlParams.get('contato');
+        data.forEach(livro => {
+          const livroBox = document.createElement('div');
+          livroBox.classList.add('alimento-box');
 
-        const novaDoacao = document.createElement('div');
-        novaDoacao.classList.add('alimento-box');
+          livroBox.innerHTML = `
+            <img src="${livro.imagem}" alt="${livro.titulo}">
+            <div>
+              <h5>${livro.nome_do_livro}</h5>
+              <p>${livro.autor}</p>
+              <p>Localização: ${livro.localizacao}</p>
+              <p>Doado por: ${livro.doador}</p>
+              <p>Contato: ${livro.contato}</p>
+              <button class="retirar-btn" data-toggle="modal" data-target="#myModal">Retirar Livro</button>
+            </div>
+          `;
 
-        novaDoacao.innerHTML = `
-          <img src="images/Carrinho.png" alt="Nova Doação">
-          <div>
-            <h5>${nome}</h5>
-            <p>Localização: ${localizacao}</p>
-            <p>Doado por: ${doador}</p>
-            <p>Contato: ${contato}</p>
-            <button class="retirar-btn" data-toggle="modal" data-target="#myModal">Retirar Alimento</button>
-          </div>
-        `;
-
-        const alimentosDisponiveis = document.getElementById('alimentos-disponiveis');
-        alimentosDisponiveis.appendChild(novaDoacao);
+          livrosDisponiveis.appendChild(livroBox);
+        });
+      } catch (error) {
+        console.error('Erro ao carregar os livros:', error);
       }
-    });
-
-    function submeterFormulario() {
-      // Aqui você pode adicionar lógica para lidar com o envio do formulário
-      // Por exemplo, enviar os dados para um servidor ou realizar alguma ação
-      // Após isso, exibir o modal de confirmação
-      $('#myModal').modal('hide');
-      $('#confirmacaoModal').modal('show');
     }
 
-    function fecharConfirmacaoModal() {
-      // Fecha o modal de confirmação
-      $('#confirmacaoModal').modal('hide');
+    // Chama a função para carregar os livros quando a página carregar
+    window.onload = carregarLivros;
 
-      // Redireciona para a página principal
-      window.location.href = 'index.html';
+    // Função para fechar o modal de confirmação
+    function fecharConfirmacaoModal() {
+      document.getElementById('confirmacaoModal').style.display = 'none';
     }
   </script>
 </body>
