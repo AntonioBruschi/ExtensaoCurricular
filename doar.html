@@ -155,41 +155,40 @@
     async function carregarLivros() {
       try {
         const response = await fetch('http://127.0.0.1:3000/doacoes');
-        console.log(response)
         const data = await response.json();
-        console.log(data)
         const livrosDisponiveis = document.getElementById('Livros-disponiveis');
-
+  
+        // Limpa os livros disponíveis antes de adicionar os novos
+        livrosDisponiveis.innerHTML = '';
+  
         data.forEach(livro => {
           const livroBox = document.createElement('div');
           livroBox.classList.add('alimento-box');
-
+  
           livroBox.innerHTML = `
-            <img src="${livro.imagem}" alt="${livro.titulo}">
+            <img src="${livro.imagem || 'caminho/para/uma/imagem/padrão'}" alt="${livro.nome_do_livro}">
             <div>
               <h5>${livro.nome_do_livro}</h5>
               <p>${livro.autor}</p>
               <p>Localização: ${livro.localizacao}</p>
               <p>Doado por: ${livro.doador}</p>
               <p>Contato: ${livro.contato}</p>
-              <button class="retirar-btn" data-toggle="modal" data-target="#myModal">Retirar Livro</button>
+              <button class="retirar-btn" onclick="retirarLivro('${livro.nome_do_livro}')">Retirar Livro</button>
             </div>
           `;
-
+  
           livrosDisponiveis.appendChild(livroBox);
         });
       } catch (error) {
         console.error('Erro ao carregar os livros:', error);
       }
     }
-
+  
     // Chama a função para carregar os livros quando a página carregar
     window.onload = carregarLivros;
-
-    // Função para fechar o modal de confirmação
-    function fecharConfirmacaoModal() {
-      document.getElementById('confirmacaoModal').style.display = 'none';
-    }
+  
+    // Inclua aqui a função retirarLivro que foi adicionada anteriormente
   </script>
+  
 </body>
 </html>

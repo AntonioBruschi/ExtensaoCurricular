@@ -11,9 +11,9 @@ app.use(cors());
 // Configurações da conexão
 const client = new Client({
 	user: "postgres",
-	host: "localhost",
-	database: "postgres",
-	password: "pgadmin",
+	host: "127.0.0.1",
+	database: "PontesDePapel",
+	password: "Toni2611",
 	port: 5432,
 });
 
@@ -98,3 +98,22 @@ async function VerificaId(nomeLivro) {
 		return null; // Retorna null em caso de erro
 	}
 }
+async function retirarLivro(nomeDoLivro) {
+	try {
+	  const url = `http://127.0.0.1:3000/doacoes/${encodeURIComponent(nomeDoLivro)}`;
+	  const response = await fetch(url, {
+		method: 'DELETE'
+	  });
+  
+	  if (response.ok) {
+		console.log("Livro removido com sucesso");
+		// Recarrega a lista de livros para refletir a remoção
+		carregarLivros();
+	  } else {
+		console.error("Falha ao remover o livro");
+	  }
+	} catch (error) {
+	  console.error("Erro ao tentar comunicar com o servidor:", error);
+	}
+  }
+  
