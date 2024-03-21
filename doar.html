@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <!-- basic -->
   <meta charset="utf-8">
@@ -36,11 +37,13 @@
       margin: 0;
       padding: 20px;
     }
+
     h2 {
       color: #333;
       text-align: center;
       margin-bottom: 20px;
     }
+
     .alimento-box {
       background-color: #fff;
       padding: 20px;
@@ -50,6 +53,7 @@
       align-items: center;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
+
     .alimento-box img {
       width: 100px;
       height: 100px;
@@ -57,17 +61,20 @@
       border-radius: 10px;
       margin-right: 20px;
     }
+
     .alimento-box h5 {
       margin: 0;
       font-size: 20px;
       font-weight: bold;
       color: #333;
     }
+
     .alimento-box p {
       margin: 5px 0;
       font-size: 16px;
       color: #777;
     }
+
     .retirar-btn {
       background-color: #0000FF;
       color: #fff;
@@ -76,50 +83,61 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
     header {
       background-color: white;
       padding: 20px;
       text-align: center;
     }
+
     header h1 {
       font-family: Arial, sans-serif;
       color: black;
       font-size: 24px;
       margin: 0;
     }
+
     header img {
       max-width: 200px;
       height: auto;
     }
+
     /* Estilo do Modal */
     .modal-content {
       border-radius: 10px;
     }
+
     .modal-header {
       background-color: #0000FF;
       color: #fff;
       border-radius: 10px 10px 0 0;
     }
+
     .modal-title {
       font-size: 24px;
     }
+
     .modal-body {
       padding: 20px;
     }
+
     .modal-footer {
       border-top: none;
       padding: 10px 20px;
     }
+
     .btn-primary {
       background-color: #0000FF;
       border: none;
     }
+
     /* Ajustes para o tamanho do modal */
     .modal-dialog {
       max-width: 800px;
     }
   </style>
 </head>
+
 <body>
   <header>
     <!-- Logo no cabeçalho -->
@@ -176,19 +194,20 @@
               <p>Doado por: ${livro.doador}</p>
               <p>Contato: ${livro.contato}</p>
               <p>ID: ${livro.id}</p>
-              <button class="retirar-btn" onclick="retirarLivro(${livro.id})">Retirar Livro</button>
+              <button class="retirar-btn" onclick="retirarLivro('${livro.id}')">Retirar Livro</button>
             </div>
-          `;
+        `;
+
 
           const container = document.getElementById('Livros-disponiveis');
           livrosDisponiveis.appendChild(livroBox);
         });
-        
+
       } catch (error) {
         console.error('Erro ao carregar os livros:', error);
       }
     }
-    
+
 
     // Chama a função para carregar os livros quando a página carregar
     window.onload = carregarLivros;
@@ -197,6 +216,31 @@
     function fecharConfirmacaoModal() {
       document.getElementById('confirmacaoModal').style.display = 'none';
     }
+
+    async function retirarLivro(idLivro) {
+      if (!confirm('Tem certeza que deseja retirar este livro?')) {
+        return;
+      }
+
+      try {
+        const url = `http://127.0.0.1:3000/doar/${idLivro}`;
+        const response = await fetch(url, {
+          method: 'DELETE',
+        });
+
+        if (response.ok) {
+          alert('Livro retirado com sucesso!');
+          window.location.reload(); // Recarrega a página para atualizar a lista de livros
+        } else {
+          throw new Error('Falha ao retirar o livro');
+        }
+      } catch (error) {
+        console.error('Erro ao retirar o livro:', error);
+        alert('Erro ao retirar o livro. Por favor, tente novamente.');
+      }
+    }
+
   </script>
 </body>
+
 </html>
