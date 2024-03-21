@@ -99,22 +99,25 @@ async function VerificaId(nomeLivro) {
 		return null; // Retorna null em caso de erro
 	}
 }
-async function retirarLivro(nomeDoLivro) {
-	try {
-	  const url = `http://127.0.0.1:3000/doacoes/${encodeURIComponent(nomeDoLivro)}`;
-	  const response = await fetch(url, {
-		method: 'DELETE'
-	  });
-  
-	  if (response.ok) {
-		console.log("Livro removido com sucesso");
-		// Recarrega a lista de livros para refletir a remoção
-		carregarLivros();
-	  } else {
-		console.error("Falha ao remover o livro");
-	  }
-	} catch (error) {
-	  console.error("Erro ao tentar comunicar com o servidor:", error);
-	}
-  }
-  
+
+app.delete("/doacoes/:idDoLivro", async (req, res) => {
+    const idDoLivro = parseInt(req.params.idDoLivro, 10);
+    try {
+        const query = {
+            text: "DELETE FROM livros WHERE id = $1",
+            values: [idDoLivro],
+        };
+        const result = await client.query(query);
+        if (result.rowCount > 0) {
+            console.log("Livro removido com sucesso.");
+            res.send("Livro removido com sucesso.");
+        } else {
+            console.log("Livro não encontrado.");
+            res.status(404).send("Livro não encontrado.");
+        }
+    } catch (err) {
+        console.error("Erro ao deletar dados no banco de dados:", err);
+        res.status(500).send("Erro ao deletar dados no banco de dados.");
+    }
+});
+
