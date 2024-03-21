@@ -12,8 +12,8 @@ app.use(cors());
 const client = new Client({
 	user: "postgres",
 	host: "127.0.0.1",
-	database: "PontesDePapel",
-	password: "Toni2611",
+	database: "postgres",
+	password: "pgadmin",
 	port: 5432,
 });
 
@@ -30,16 +30,16 @@ client
 		console.error("Erro ao conectar ao banco de dados:", err);
 	});
 
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.post("/doar", async (req, res) => {
-	const { nome, autor, localizacao, doador, contato } = req.body;
+	const { nome, Autor, localizacao, doador, contato } = req.body;
 
 	try {
 		const query = {
 			text: "INSERT INTO livros(nome_do_livro, autor, localizacao, doador, contato) VALUES($1, $2, $3, $4, $5)",
-			values: [nome, autor, localizacao, doador, contato],
+			values: [nome, Autor, localizacao, doador, contato],
 		};
 
 		await client.query(query);
