@@ -11,7 +11,7 @@ app.use(cors());
 // Configurações da conexão
 const client = new Client({
 	user: "postgres",
-	host: "127.0.0.1",
+	host: "localhost",
 	database: "postgres",
 	password: "pgadmin",
 	port: 5432,
@@ -30,21 +30,20 @@ client
 		console.error("Erro ao conectar ao banco de dados:", err);
 	});
 
-// app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.post("/doar", async (req, res) => {
-	const { nome, Autor, localizacao, doador, contato } = req.body;
+	const { nome, autor, localizacao, doador, contato } = req.body;
 
 	try {
 		const query = {
 			text: "INSERT INTO livros(nome_do_livro, autor, localizacao, doador, contato) VALUES($1, $2, $3, $4, $5)",
-			values: [nome, Autor, localizacao, doador, contato],
+			values: [nome, autor, localizacao, doador, contato],
 		};
 
 		await client.query(query);
 		console.log("Dados inseridos com sucesso no banco de dados!");
-		
 		res.send("Dados inseridos com sucesso!");
 	} catch (err) {
 		console.error("Erro ao inserir dados no banco de dados:", err);
@@ -52,7 +51,7 @@ app.post("/doar", async (req, res) => {
 	}
 });
 
-app.get("/doacoes", async (req, res) => {
+app.get("/doar", async (req, res) => {
 	try {
 		const query = "SELECT * FROM livros";
 		const result = await client.query(query);
@@ -64,60 +63,19 @@ app.get("/doacoes", async (req, res) => {
 	}
 });
 
-app.delete("/doacoes/:nomeLivro", async (req, res) => {
-	const nomeLivro = req.params.nomeLivro;
-	const id = await VerificaId(nomeLivro);
+app.delete("/doar/:idLivro", async (req, res) => {
+	const { idLivro } = req.params;
 	try {
-		console.log(id);
-		const query = {
-			text: "DELETE FROM livros WHERE id = $1",
-			values: [id],
-		};
-
-		await client.query(query);
-		res.send("Dados deletados com sucesso!");
+	  const query = {
+		text: "DELETE FROM livros WHERE id = $1",
+		values: [idLivro],
+	  };
+  
+	  await client.query(query);
+	  res.send("Livro retirado com sucesso!");
 	} catch (err) {
-		console.error("Erro ao deletar dados no banco de dados:", err);
-		res.status(500).send("Erro ao deletar dados no banco de dados!");
+	  console.error("Erro ao deletar livro:", err);
+	  res.status(500).send("Erro ao tentar deletar o livro.");
 	}
-});
-
-async function VerificaId(nomeLivro) {
-	const query1 = {
-		text: "SELECT id FROM livros WHERE nome_do_livro = $1",
-		values: [nomeLivro],
-	};
-
-	console.log(query1);
-
-	try {
-		const result = await client.query(query1);
-		console.log("Id do Livro: " + result.rows[0].id); // Acessa o id do primeiro resultado (assumindo que apenas um livro é retornado)
-		return result.rows[0].id;
-	} catch (error) {
-		console.error("Erro ao executar a consulta:", error);
-		return null; // Retorna null em caso de erro
-	}
-}
-
-app.delete("/doacoes/:idDoLivro", async (req, res) => {
-    const idDoLivro = parseInt(req.params.idDoLivro, 10);
-    try {
-        const query = {
-            text: "DELETE FROM livros WHERE id = $1",
-            values: [idDoLivro],
-        };
-        const result = await client.query(query);
-        if (result.rowCount > 0) {
-            console.log("Livro removido com sucesso.");
-            res.send("Livro removido com sucesso.");
-        } else {
-            console.log("Livro não encontrado.");
-            res.status(404).send("Livro não encontrado.");
-        }
-    } catch (err) {
-        console.error("Erro ao deletar dados no banco de dados:", err);
-        res.status(500).send("Erro ao deletar dados no banco de dados.");
-    }
-});
+  });
 

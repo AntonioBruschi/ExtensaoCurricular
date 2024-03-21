@@ -154,7 +154,7 @@
     // Função para fazer a requisição à API e inserir os dados na página
     async function carregarLivros() {
       try {
-        const response = await fetch('http://127.0.0.1:3000/doacoes');
+        const response = await fetch('http://127.0.0.1:3000/doar');
         console.log(response)
         const data = await response.json();
         console.log(data)
@@ -176,7 +176,7 @@
               <p>Doado por: ${livro.doador}</p>
               <p>Contato: ${livro.contato}</p>
               <p>ID: ${livro.id}</p>
-              <button class="retirar-btn" data-toggle="modal" data-target="#myModal">Retirar Livro</button>
+              <button class="retirar-btn" onclick="retirarLivro(${livro.id})">Retirar Livro</button>
             </div>
           `;
 
