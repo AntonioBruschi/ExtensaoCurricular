@@ -44,6 +44,7 @@ app.post("/doar", async (req, res) => {
 
 		await client.query(query);
 		console.log("Dados inseridos com sucesso no banco de dados!");
+		
 		res.send("Dados inseridos com sucesso!");
 	} catch (err) {
 		console.error("Erro ao inserir dados no banco de dados:", err);
