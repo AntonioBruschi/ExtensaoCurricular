@@ -10,7 +10,7 @@ app.use(cors());
 
 // Configurações da conexão
 const client = new Client({
-	user: "postgres",
+	user: "ghps2704",
 	host: "localhost",
 	database: "postgres",
 	password: "pgadmin",
