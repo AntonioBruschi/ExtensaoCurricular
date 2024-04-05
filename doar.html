@@ -184,9 +184,8 @@
           const livroDiv = document.createElement('div');
           livroDiv.classList.add('livro');
           livroDiv.id = `livro-${livro.id}`;
-
           livroBox.innerHTML = `
-            <img src="${livro.imagem}" alt="${livro.titulo}">
+            <img src="${livro.imagem}" alt="${livro.nome_do_livro}">
             <div>
               <h5>${livro.nome_do_livro}</h5>
               <p>${livro.autor}</p>
@@ -197,8 +196,6 @@
               <button class="retirar-btn" onclick="retirarLivro('${livro.id}')">Retirar Livro</button>
             </div>
         `;
-
-
           const container = document.getElementById('Livros-disponiveis');
           livrosDisponiveis.appendChild(livroBox);
         });

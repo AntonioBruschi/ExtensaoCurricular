@@ -1,6 +1,7 @@
 const { Client } = require("pg");
 const express = require("express");
 const cors = require("cors");
+const path = require('path')
 
 //npm run dev para iniciar o servidor
 
@@ -50,6 +51,31 @@ app.post("/doar", async (req, res) => {
 		res.status(500).send("Erro ao inserir dados no banco de dados!");
 	}
 });
+
+const caminhoIndex = path.join(__dirname, "..", 'index.html')
+const caminhoDoar = path.join(__dirname, "..", 'doar.html')
+const caminhoHst = path.join(__dirname, "..", 'hst.html')
+const caminhoEnv = path.join(__dirname, "..", 'env.html')
+
+
+app.get("/", async (req, res) =>{
+	res.sendFile(caminhoIndex)
+})
+app.get("/index.html", async (req, res) =>{
+	res.sendFile(caminhoIndex)
+})
+
+app.get("/doar.html", async (req, res) =>{
+	res.sendFile(caminhoDoar)
+})
+
+app.get("/hst.html", async (req, res) =>{
+	res.sendFile(caminhoHst)
+})
+
+app.get("/env.html", async (req, res) =>{
+	res.sendFile(caminhoEnv)
+})
 
 app.get("/doar", async (req, res) => {
 	try {
