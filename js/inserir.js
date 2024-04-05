@@ -18,8 +18,8 @@ app.use(express.json());
 const client = new Client({
 	user: "postgres",
 	host: "localhost",
-	database: "PontesDePapel",
-	password: "Toni2611",
+	database: "postgres",
+	password: "pgadmin",
 	port: 5432,
 });
 
@@ -41,7 +41,7 @@ client
 
 app.post("/doar", async (req, res) => {
 	const { nome, autor, localizacao, doador, contato } = req.body;
-
+	console.log(req.body);
 	try {
 		const query = {
 			text: "INSERT INTO livros(nome_do_livro, autor, localizacao, doador, contato) VALUES($1, $2, $3, $4, $5)",
@@ -50,12 +50,13 @@ app.post("/doar", async (req, res) => {
 
 		await client.query(query);
 		console.log("Dados inseridos com sucesso no banco de dados!");
-		res.send("Dados inseridos com sucesso!");
+		res.redirect("/doar.html"); 
 	} catch (err) {
 		console.error("Erro ao inserir dados no banco de dados:", err);
 		res.status(500).send("Erro ao inserir dados no banco de dados!");
 	}
 });
+
 
 const caminhoIndex = path.join(__dirname, "..", 'index.html')
 const caminhoDoar = path.join(__dirname, "..", 'doar.html')
