@@ -9,12 +9,17 @@ const app = express();
 const port = 3000;
 app.use(cors());
 
+app.use(express.static(__dirname + '/../public'));
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 // Configurações da conexão
 const client = new Client({
 	user: "postgres",
 	host: "localhost",
-	database: "postgres",
-	password: "pgadmin",
+	database: "PontesDePapel",
+	password: "Toni2611",
 	port: 5432,
 });
 
@@ -31,8 +36,8 @@ client
 		console.error("Erro ao conectar ao banco de dados:", err);
 	});
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+	
+	// Middleware para servir arquivos estáticos, incluindo CSS
 
 app.post("/doar", async (req, res) => {
 	const { nome, autor, localizacao, doador, contato } = req.body;
@@ -56,7 +61,6 @@ const caminhoIndex = path.join(__dirname, "..", 'index.html')
 const caminhoDoar = path.join(__dirname, "..", 'doar.html')
 const caminhoHst = path.join(__dirname, "..", 'hst.html')
 const caminhoEnv = path.join(__dirname, "..", 'env.html')
-
 
 app.get("/", async (req, res) =>{
 	res.sendFile(caminhoIndex)
@@ -103,5 +107,4 @@ app.delete("/doar/:idLivro", async (req, res) => {
 	  console.error("Erro ao deletar livro:", err);
 	  res.status(500).send("Erro ao tentar deletar o livro.");
 	}
-  });
-
+});
