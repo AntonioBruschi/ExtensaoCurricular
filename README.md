@@ -1,21 +1,3 @@
----
-title: "Pontes de Papel"
-draft: false
-language: pt-br
-featured_image: ../assets/images/featured/featured-img-placeholder.png
-summary: "Somos um projeto que visa ligar quem quer ligar as pessoas que querem doar seus livros com as pessoas que querem ler os livros doados"
-author: Unifil
-authorimage: ../assets/images/global/author.webp
-categories: Blog
-tags:
-  ["ES", "CC", "Livros", "Educação", "Tecnologia", "Cultura", "Entretenimento"]
-linkweb: "http://164.152.55.248"
-linkblog: "https://pontesdpapel.blogspot.com/?m=1"
-linkvideo: "https://www.youtube.com/watch?v=oqkNFwPmsyY"
----
-
----
-
 # Pontes de Papel
 
 O projeto tem como objetivo atender a demanda crescente da comunidade acadêmica por ferramentas de busca de livros acadêmicos de forma digital
