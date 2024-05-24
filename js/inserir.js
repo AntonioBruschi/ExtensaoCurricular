@@ -67,6 +67,15 @@ app.get("/", async (req, res) =>{
 	res.sendFile(caminhoIndex)
 })
 app.get("/index.html", async (req, res) =>{
+	const numeroAcessosvelho = new getAcessos();
+	const numeroAcesso = parseInt(numeroAcessosvelho, 10) + 1
+	
+	if(!numeroAcessosvelho){
+		inserirAcesso();
+	} else {
+		updateAcessos(numeroAcesso);
+	}
+
 	res.sendFile(caminhoIndex)
 })
 
@@ -109,3 +118,42 @@ app.delete("/doar/:idLivro", async (req, res) => {
 	  res.status(500).send("Erro ao tentar deletar o livro.");
 	}
 });
+
+async function getAcessos(){
+	try {
+		const query = "SELECT * FROM acessos ORDER BY numero_acessos DESC LIMIT 1";
+		const result = await client.query(query);
+		// console.log(result.rows)
+		return(result.rows); // Envie apenas os resultados da consulta
+	} catch (err) {
+		console.error("Erro ao buscar dados no banco de dados:", err);
+		return("Erro ao buscar dados no banco de dados!");
+	}
+};
+
+async function updateAcessos(nAcessos){
+	try {
+		const query = {
+			text: "UPDATE acessos SET numero_acessos = $1",
+			values: [nAcessos]}
+		
+		const result = await client.query(query);
+		// console.log(result.rows)
+		return(result.rows); // Envie apenas os resultados da consulta
+	} catch (err) {
+		console.error("Erro ao buscar dados no banco de dados:", err);
+		return("Erro ao buscar dados no banco de dados!");
+	}
+}
+
+async function inserirAcesso(){
+	try {
+		const query = "INSERT INTO acessos(numero_acessos) VALUES ('1')";
+		const result = await client.query(query);
+		// console.log(result.rows)
+		return(result.rows); // Envie apenas os resultados da consulta
+	} catch (err) {
+		console.error("Erro ao buscar dados no banco de dados:", err);
+		return("Erro ao buscar dados no banco de dados!");
+	}
+}
