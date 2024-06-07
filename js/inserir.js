@@ -18,8 +18,8 @@ app.use(express.json());
 const client = new Client({
 	user: "postgres",
 	host: "localhost",
-	database: "postgres",
-	password: "pgadmin",
+	database: "PontesDePapel",
+	password: "Toni2611",
 	port: 5432,
 });
 
@@ -64,12 +64,9 @@ const caminhoHst = path.join(__dirname, "..", 'hst.html')
 const caminhoEnv = path.join(__dirname, "..", 'env.html')
 
 app.get("/", async (req, res) =>{
-	res.sendFile(caminhoIndex)
-})
-app.get("/index.html", async (req, res) =>{
-	const numeroAcessosvelho = new getAcessos();
+	const numeroAcessosvelho = await getAcessos();
 	const numeroAcesso = parseInt(numeroAcessosvelho, 10) + 1
-	
+	// console.log(numeroAcessosvelho)
 	if(!numeroAcessosvelho){
 		inserirAcesso();
 	} else {
@@ -78,6 +75,18 @@ app.get("/index.html", async (req, res) =>{
 
 	res.sendFile(caminhoIndex)
 })
+// app.get("/index.html", async (req, res) =>{
+// 	const numeroAcessosvelho = await getAcessos();
+// 	const numeroAcesso = parseInt(numeroAcessosvelho, 10) + 1
+// 	console.log(numeroAcessosvelho)
+// 	if(!numeroAcessosvelho){
+// 		inserirAcesso();
+// 	} else {
+// 		updateAcessos(numeroAcesso);
+// 	}
+
+// 	res.sendFile(caminhoIndex)
+// })
 
 app.get("/doar.html", async (req, res) =>{
 	res.sendFile(caminhoDoar)
@@ -119,15 +128,31 @@ app.delete("/doar/:idLivro", async (req, res) => {
 	}
 });
 
+app.get('/get-acessos', async (req, res) => {
+    try {
+        const acessos = await getAcessos();
+        res.json({ acessos });
+    } catch (err) {
+        res.status(500).json({ message: 'Erro ao buscar dados de acesso' });
+    }
+});
+
+
 async function getAcessos(){
 	try {
 		const query = "SELECT * FROM acessos ORDER BY numero_acessos DESC LIMIT 1";
 		const result = await client.query(query);
-		// console.log(result.rows)
-		return(result.rows); // Envie apenas os resultados da consulta
+
+		if (result.rows.length === 0){
+			return false;
+		} else {
+			console.log(result.rows[0].numero_acessos)
+			return result.rows[0].numero_acessos; // Envie apenas os resultados da consulta
+		}
+
 	} catch (err) {
 		console.error("Erro ao buscar dados no banco de dados:", err);
-		return("Erro ao buscar dados no banco de dados!");
+		return "Erro ao buscar dados no banco de dados!";
 	}
 };
 
@@ -135,25 +160,23 @@ async function updateAcessos(nAcessos){
 	try {
 		const query = {
 			text: "UPDATE acessos SET numero_acessos = $1",
-			values: [nAcessos]}
-		
+			values: [nAcessos]
+		};
 		const result = await client.query(query);
-		// console.log(result.rows)
-		return(result.rows); // Envie apenas os resultados da consulta
+		return result.rowCount; // Retorna o número de linhas afetadas
 	} catch (err) {
 		console.error("Erro ao buscar dados no banco de dados:", err);
-		return("Erro ao buscar dados no banco de dados!");
+		return "Erro ao buscar dados no banco de dados!";
 	}
 }
 
 async function inserirAcesso(){
 	try {
-		const query = "INSERT INTO acessos(numero_acessos) VALUES ('1')";
+		const query = "INSERT INTO acessos(numero_acessos) VALUES (1)";
 		const result = await client.query(query);
-		// console.log(result.rows)
-		return(result.rows); // Envie apenas os resultados da consulta
+		return result.rowCount; // Retorna o número de linhas inseridas
 	} catch (err) {
 		console.error("Erro ao buscar dados no banco de dados:", err);
-		return("Erro ao buscar dados no banco de dados!");
+		return "Erro ao buscar dados no banco de dados!";
 	}
 }

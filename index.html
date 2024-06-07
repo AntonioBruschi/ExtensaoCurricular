@@ -68,10 +68,15 @@
               </div>
             </div>
             <div class="col-xl-10 col-lg-8 col-md-8 col-sm-9">
+              <!-- Header part of your HTML -->
+            <div class="access-counter">
+              Acessos: <span id="accessCount"></span>
+            </div>
               <div class="menu-area">
                 <div class="limit-box">
                   <nav class="main-menu ">
                     <ul class="menu-area-main">
+                      <li icon=""></li>
                       <li class="active"> <a href="index.html">Home</a> </li>
                       <li> <a href="hst.html">Sobre</a> </li>
                       <li> <a href="doar.html">Doações</a> </li>
@@ -255,6 +260,15 @@
 <script src="js/custom.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
 <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    fetch('/get-acessos')
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById('accessCount').textContent = data.acessos;
+    })
+    .catch(err => console.error('Erro ao carregar acessos:', err));
+});
+</script>
 
 
 
