@@ -1,25 +1,32 @@
-# Pontes de Papel
+<h1 align="center">Pontes de Papel</h1>
 
-O projeto tem como objetivo atender a demanda crescente da comunidade acadêmica por ferramentas de busca de livros acadêmicos de forma digital
+<p align="center">
+  <img src="./public/images/logo.png" alt="Logo do Pontes de Papel">
+</p>
 
-# Como usar ?
+O projeto "Pontes de Papel" tem como objetivo atender a demanda crescente da comunidade acadêmica por ferramentas de busca de livros acadêmicos de forma digital.
 
-O uso dele e simples, primeiro precisamos que uma pessoa cadastre o livro em nosso site, depois do livro cadastrado precisamos de alguém com interesse no livro cadastrado, assim que ele decidir que ele quer ler o livro ele pressiona o botão "Retirar Livro" e coloca seus dados de contato, assim que os dados for colocado automaticamente o sistema enviara os dados para o cliente que cadastrou o livro em nosso sistema
+## Como usar?
 
-# Porque Usar?
+O uso é simples:
+1. Primeiro, uma pessoa deve cadastrar o livro em nosso site.
+2. Depois do livro cadastrado, alguém com interesse no livro pode pressionar o botão "Retirar Livro" e colocar seus dados de contato.
+3. Assim que os dados forem colocados, automaticamente o sistema enviará os dados para o cliente que cadastrou o livro.
 
-1. O projeto visa reduzir a poluição
-2. Auxiliaremos a comunidade
-3. Oferecemos um meio simples de conseguir novos livros
+## Por que usar?
+
+1. **Redução da poluição**: O projeto visa reduzir a poluição.
+2. **Auxílio à comunidade**: Auxiliamos a comunidade acadêmica.
+3. **Facilidade de acesso**: Oferecemos um meio simples de conseguir novos livros.
 
 ## Tecnologias Usadas
 
-- HTML
-- CSS
-- Node.js
-- Oracle
-- Postgres
+- **HTML**
+- **CSS**
+- **Node.js**
+- **Oracle**
+- **Postgres**
 
 ## O que esperamos
 
-Uma melhora na comunidade de leitores na unifil, visto que esse e um habito escasso hoje em dia
+Esperamos uma melhora na comunidade de leitores na Unifil, visto que esse é um hábito escasso hoje em dia.
