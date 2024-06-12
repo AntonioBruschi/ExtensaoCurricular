@@ -142,7 +142,7 @@
 <body>
   <header>
     <!-- Logo no cabeçalho -->
-    <a href="index.html"><img src="/images/Logo.png" alt="Logo da sua organização"></a>
+    <a href="/"><img src="/images/Logo.png" alt="Logo da sua organização"></a>
     <h1>Livro Disponíveis para Doação</h1>
   </header>
   <br>
@@ -186,14 +186,13 @@
           livroDiv.classList.add('livro');
           livroDiv.id = `livro-${livro.id}`;
           livroBox.innerHTML = `
-            <img src="${livro.imagem}" alt="${livro.nome_do_livro}">
+            <img src="${livro.foto}" alt="${livro.nome_do_livro}">
             <div>
               <h5>${livro.nome_do_livro}</h5>
               <p>${livro.autor}</p>
               <p>Localização: ${livro.localizacao}</p>
               <p>Doado por: ${livro.doador}</p>
               <p>Contato: ${livro.contato}</p>
-              <p>ID: ${livro.id}</p>
               <button class="retirar-btn" onclick="retirarLivro('${livro.id}')">Retirar Livro</button>
             </div>
         `;

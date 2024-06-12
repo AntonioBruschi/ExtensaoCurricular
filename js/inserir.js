@@ -1,7 +1,21 @@
 const { Client } = require("pg");
 const express = require("express");
+const fs = require('fs');
 const cors = require("cors");
 const path = require('path')
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, path.join(__dirname, '../public/uploads')) // Onde os arquivos serão salvos
+    },
+    filename: function (req, file, cb) {
+        // Gerando um nome de arquivo único com a extensão original
+        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+    }
+});
+
+const upload = multer({ storage: storage });
+
 
 //npm run dev para iniciar o servidor
 
@@ -10,6 +24,8 @@ const port = 3000;
 app.use(cors());
 
 app.use(express.static(__dirname + '/../public'));
+app.use('/uploads', express.static(path.join(__dirname, 'public', 'uploads')));
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -19,7 +35,7 @@ const client = new Client({
 	user: "postgres",
 	host: "localhost",
 	database: "postgres",
-	password: "pgadmin",
+	password: "pgadim",
 	port: 5432,
 });
 
@@ -39,15 +55,15 @@ client
 	
 	// Middleware para servir arquivos estáticos, incluindo CSS
 
-app.post("/doar", async (req, res) => {
+app.post("/doar", upload.single('fotoLivro'), async (req, res) => {
 	const { nome, autor, localizacao, doador, contato } = req.body;
-	console.log(req.body);
+	const fotoLivro = 'uploads/' + req.file.filename; // Modifique aqui para armazenar caminho relativo
+
 	try {
 		const query = {
-			text: "INSERT INTO livros(nome_do_livro, autor, localizacao, doador, contato) VALUES($1, $2, $3, $4, $5)",
-			values: [nome, autor, localizacao, doador, contato],
+			text: "INSERT INTO livros(nome_do_livro, autor, localizacao, doador, contato, foto) VALUES($1, $2, $3, $4, $5, $6)",
+			values: [nome, autor, localizacao, doador, contato, fotoLivro],
 		};
-
 		await client.query(query);
 		console.log("Dados inseridos com sucesso no banco de dados!");
 		res.redirect("/doar.html"); 
@@ -56,6 +72,7 @@ app.post("/doar", async (req, res) => {
 		res.status(500).send("Erro ao inserir dados no banco de dados!");
 	}
 });
+	
 
 
 const caminhoIndex = path.join(__dirname, "..", 'index.html')
@@ -113,19 +130,42 @@ app.get("/doar", async (req, res) => {
 });
 
 app.delete("/doar/:idLivro", async (req, res) => {
-	const { idLivro } = req.params;
-	try {
-	  const query = {
-		text: "DELETE FROM livros WHERE id = $1",
-		values: [idLivro],
-	  };
-  
-	  await client.query(query);
-	  res.send("Livro retirado com sucesso!");
-	} catch (err) {
-	  console.error("Erro ao deletar livro:", err);
-	  res.status(500).send("Erro ao tentar deletar o livro.");
-	}
+    const { idLivro } = req.params;
+    try {
+        // Primeiro, recuperar o caminho do arquivo
+        const querySelect = {
+            text: "SELECT foto FROM livros WHERE id = $1",
+            values: [idLivro],
+        };
+        const result = await client.query(querySelect);
+        
+        if (result.rows.length > 0) {
+            const fotoPath = result.rows[0].foto;
+
+            // Apagar o arquivo do sistema de arquivos
+            const fullPath = path.join(__dirname, '..', 'public', fotoPath);
+            fs.unlink(fullPath, (err) => {
+                if (err) {
+                    console.error("Erro ao deletar o arquivo:", err);
+                } else {
+                    console.log("Arquivo deletado com sucesso!");
+                }
+            });
+
+            // Depois, deletar o registro do banco de dados
+            const queryDelete = {
+                text: "DELETE FROM livros WHERE id = $1",
+                values: [idLivro],
+            };
+            await client.query(queryDelete);
+            res.send("Livro retirado com sucesso!");
+        } else {
+            res.status(404).send("Livro não encontrado!");
+        }
+    } catch (err) {
+        console.error("Erro ao deletar livro:", err);
+        res.status(500).send("Erro ao tentar deletar o livro.");
+    }
 });
 
 app.get('/get-acessos', async (req, res) => {
