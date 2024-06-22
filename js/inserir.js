@@ -35,7 +35,7 @@ const client = new Client({
 	user: "postgres",
 	host: "localhost",
 	database: "postgres",
-	password: "pgadim",
+	password: "pgadmin",
 	port: 5432,
 });
 
